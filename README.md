@@ -1,2 +1,2 @@
-# mj-hotell-book-api
+# mj-hotel-book-api
 Demo Hotel Booking API
