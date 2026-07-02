@@ -407,72 +407,89 @@
         "properties": {
           "roomId": {
             "type": "integer",
+            "description": "Database ID for room",
             "format": "int32"
           },
           "roomNumber": {
             "type": "string",
+            "description": "Human readable room number",
             "nullable": true
           },
           "roomTypeName": {
             "type": "string",
+            "description": "Room type name",
             "nullable": true
           },
           "capacity": {
             "type": "integer",
+            "description": "Capacity of room in people",
             "format": "int32"
           },
           "hotelId": {
             "type": "integer",
+            "description": "Database ID for hotel the room is contained in",
             "format": "int32"
           },
           "hotelName": {
             "type": "string",
+            "description": "Name of hotel the room is contained in",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Details about an available room"
       },
       "BookingResponseDataTransfer": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
+            "description": "Database ID of booking",
             "format": "int32"
           },
           "bookingReference": {
             "type": "string",
+            "description": "Boooking reference number",
             "nullable": true
           },
           "firstName": {
             "type": "string",
+            "description": "First name of guest",
             "nullable": true
           },
           "lastName": {
             "type": "string",
+            "description": "Last name of guest",
             "nullable": true
           },
           "address": {
             "type": "string",
+            "description": "Address of guest",
             "nullable": true
           },
           "contactNumber": {
             "type": "string",
+            "description": "Contact phone number of guest",
             "nullable": true
           },
           "guestCount": {
             "type": "integer",
+            "description": "Number of guests",
             "format": "int32"
           },
           "checkInDate": {
             "type": "string",
+            "description": "Date of check in, in YYYY-MM-DD format",
             "format": "date"
           },
           "checkOutDate": {
             "type": "string",
+            "description": "Date of check out, in YYYY-MM-DD format",
             "format": "date"
           },
           "createdAt": {
             "type": "string",
+            "description": "Date booking was created",
             "format": "date-time"
           },
           "room": {
@@ -480,14 +497,17 @@
           },
           "hotelName": {
             "type": "string",
+            "description": "Name of hotel",
             "nullable": true
           },
           "hotelAddress": {
             "type": "string",
+            "description": "Address of hotel",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Booking confirmation"
       },
       "CreateBookingDataTransfer": {
         "required": [
@@ -504,6 +524,7 @@
         "properties": {
           "hotelId": {
             "type": "integer",
+            "description": "Database ID of Hotel",
             "format": "int32"
           },
           "roomType": {
@@ -514,39 +535,47 @@
           "firstName": {
             "maxLength": 100,
             "minLength": 0,
-            "type": "string"
+            "type": "string",
+            "description": "First name of guest"
           },
           "lastName": {
             "maxLength": 100,
             "minLength": 0,
-            "type": "string"
+            "type": "string",
+            "description": "Last name of guest"
           },
           "address": {
             "maxLength": 500,
             "minLength": 0,
-            "type": "string"
+            "type": "string",
+            "description": "Address of guest"
           },
           "contactNumber": {
             "maxLength": 50,
             "minLength": 0,
-            "type": "string"
+            "type": "string",
+            "description": "Guest's contact phone number"
           },
           "guestCount": {
             "maximum": 10,
             "minimum": 1,
             "type": "integer",
+            "description": "Number of guests",
             "format": "int32"
           },
           "checkInDate": {
             "type": "string",
+            "description": "Date of check in, in YYYY-MM-DD format",
             "format": "date"
           },
           "checkOutDate": {
             "type": "string",
+            "description": "Date of check out, in YYYY-MM-DD format",
             "format": "date"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Data required to book a room in a hotel"
       },
       "ErrorResponse": {
         "type": "object",
@@ -570,36 +599,44 @@
         "properties": {
           "id": {
             "type": "integer",
+            "description": "Database Id of hotel",
             "format": "int32"
           },
           "name": {
             "type": "string",
+            "description": "Hotel name",
             "nullable": true
           },
           "address": {
             "type": "string",
+            "description": "Hotel address",
             "nullable": true
           },
           "totalRooms": {
             "type": "integer",
+            "description": "Number of rooms in the hotel",
             "format": "int32"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Basic hotel details"
       },
       "HotelDetailDataTransfer": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
+            "description": "Database Id of hotel",
             "format": "int32"
           },
           "name": {
             "type": "string",
+            "description": "Hotel name",
             "nullable": true
           },
           "address": {
             "type": "string",
+            "description": "Hotel address",
             "nullable": true
           },
           "rooms": {
@@ -607,32 +644,39 @@
             "items": {
               "$ref": "#/components/schemas/RoomDataTransfer"
             },
+            "description": "List of rooms and their details",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Hotel details including rooms"
       },
       "RoomDataTransfer": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
+            "description": "Database ID for room",
             "format": "int32"
           },
           "roomNumber": {
             "type": "string",
+            "description": "Human readable room number",
             "nullable": true
           },
           "roomTypeName": {
             "type": "string",
+            "description": "Room type name",
             "nullable": true
           },
           "capacity": {
             "type": "integer",
+            "description": "Capacity of room in people",
             "format": "int32"
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Room details"
       }
     }
   },

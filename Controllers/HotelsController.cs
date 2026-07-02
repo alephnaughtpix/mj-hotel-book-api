@@ -50,7 +50,7 @@ public class HotelsController : ApiControllerBase
     /// <summary>
     /// Get hotel details by ID
     /// </summary>
-    /// <param name="id">The hotel ID</param>
+    /// <param name="id">The hotels ID</param>
     /// <returns>Hotel details including rooms</returns>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(HotelDetailDataTransfer), StatusCodes.Status200OK)]
