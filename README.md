@@ -24,7 +24,7 @@ The example provides a simple API which could be imaged as the backend used by a
 - **Entity Framework Core** 10
 - **SQLite** database for demonstration purposes
 - **[Swashbuckle](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)** for Swagger/OpenAPI
-- **[Bogus]([https://](https://github.com/bchavez/Bogus)https:/)** for seed data generation
+- **[Bogus](https://github.com/bchavez/Bogus)** for seed data generation
 
 ## Install
 
