@@ -481,6 +481,10 @@
           "hotelName": {
             "type": "string",
             "nullable": true
+          },
+          "hotelAddress": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
