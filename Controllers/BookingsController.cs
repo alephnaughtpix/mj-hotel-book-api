@@ -62,7 +62,7 @@ public class BookingsController : ApiControllerBase
     public async Task<ActionResult<BookingResponseDataTransfer>> GetBookingByReference(string reference)
     {
         if (string.IsNullOrWhiteSpace(reference))
-            return BadRequest(new { message ="Booking reference number is required." });
+            return BadRequest(new { message = "Booking reference number is required." });
 
         try
         {

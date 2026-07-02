@@ -29,7 +29,7 @@ public class HotelsController : ApiControllerBase
     public async Task<ActionResult<IEnumerable<HotelDataTransfer>>> SearchHotels([FromQuery] string? name)
     {
         if (string.IsNullOrWhiteSpace(name))
-            return BadRequest(new { message ="Hotel name is required for searching." });
+            return BadRequest(new { message = "Hotel name is required for searching." });
 
         try
         {
@@ -97,20 +97,23 @@ public class HotelsController : ApiControllerBase
     {
         // Validate dates
         if (checkOut <= checkIn)
-            return BadRequest(new { message ="Check-out date must be after check-in date." });
+            return BadRequest(new { message = "Check-out date must be after check-in date." });
         if (checkIn < DateOnly.FromDateTime(DateTime.Today))
-            return BadRequest(new { message ="Check-in date cannot be in the past." });
+            return BadRequest(new { message = "Check-in date cannot be in the past." });
 
         // Check number of guests
         if (guestCount < 1)
-            return BadRequest(new { message ="At least 1 guest is required." });
+            return BadRequest(new { message = "At least 1 guest is required." });
 
         // Validate room type if provided
         if (!string.IsNullOrWhiteSpace(roomType))
         {
-            var validRoomTypes = new[] { "single", "double", "deluxe" };
-            if (!validRoomTypes.Contains(roomType.ToLower()))
-                return BadRequest(new { message = $"Invalid room type '{roomType}'. Valid types are: Single, Double, Deluxe." });
+            var roomTypeInfo = await _hotelService.GetRoomTypeByNameAsync(roomType);
+            if (roomTypeInfo == null)
+            {
+                var validTypes = await _hotelService.GetValidRoomTypeNamesAsync();
+                return BadRequest(new { message = $"Invalid room type '{roomType}'. Valid types are: {string.Join(", ", validTypes)}." });
+            }
         }
 
         try

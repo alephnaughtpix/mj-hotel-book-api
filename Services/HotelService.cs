@@ -18,7 +18,7 @@ public class HotelService : IHotelService
     /// as a partial search (eg. "hotel" will list anything with "hotel" in it's name.) 
     /// </summary>
     /// <param name="name">Name or partial name of hotel</param>
-    /// <returns>A list of one or more hotels</returns>
+    /// <returns>A list of one or more hotels, if found</returns>
     public async Task<IEnumerable<HotelDataTransfer>> SearchHotelsByNameAsync(string name)
     {
         return await _context.Hotels
@@ -79,9 +79,7 @@ public class HotelService : IHotelService
 
         // Apply room type filter if specified
         if (!string.IsNullOrWhiteSpace(roomType))
-        {
             query = query.Where(r => r.RoomType.Name.ToLower() == roomType.ToLower());
-        }
 
         var availableRooms = await query
             .Select(r => new AvailableRoomDataTransfer
@@ -96,5 +94,34 @@ public class HotelService : IHotelService
             .ToListAsync();
 
         return availableRooms;
+    }
+
+    /// <summary>
+    /// Get room type details by name (case-insensitive)
+    /// </summary>
+    /// <param name="roomTypeName">Name of the room type</param>
+    /// <returns>Room type details or null if not found</returns>
+    public async Task<RoomTypeDataTransfer?> GetRoomTypeByNameAsync(string roomTypeName)
+    {
+        return await _context.RoomTypes
+            .Where(rt => rt.Name.ToLower() == roomTypeName.ToLower())
+            .Select(rt => new RoomTypeDataTransfer
+            {
+                Id = rt.Id,
+                Name = rt.Name,
+                Capacity = rt.Capacity
+            })
+            .FirstOrDefaultAsync();
+    }
+
+    /// <summary>
+    /// Get all valid room type names
+    /// </summary>
+    /// <returns>List of room type names</returns>
+    public async Task<IEnumerable<string>> GetValidRoomTypeNamesAsync()
+    {
+        return await _context.RoomTypes
+            .Select(rt => rt.Name)
+            .ToListAsync();
     }
 }

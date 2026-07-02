@@ -23,16 +23,12 @@ public class DataSeeder
     {
         // Only seed if no hotels exist 
         if (await _context.Hotels.AnyAsync())
-        {
             return false; // Data already exists, seeding skipped
-        }
 
         // Get room types from database
         var roomTypes = await _context.RoomTypes.ToListAsync();
         if (!roomTypes.Any())
-        {
             throw new InvalidOperationException("Room types not found. Ensure migrations have been applied.");
-        }
 
         // Create fake hotels
         var hotelFaker = new Faker<Hotel>()
@@ -109,6 +105,10 @@ public class DataSeeder
         return true; // Data seeded successfully
     }
 
+    /// <summary>
+    /// Reset seeded data
+    /// </summary>
+    /// <returns>Confirmation message</returns>
     public async Task ResetAsync()
     {
         // Delete all data except room types 

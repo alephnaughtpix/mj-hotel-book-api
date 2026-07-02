@@ -60,21 +60,18 @@ public class BookingService : IBookingService
         // Validate room type if provided
         if (!string.IsNullOrWhiteSpace(bookingRequest.RoomType))
         {
-            var validRoomTypes = new[] { "single", "double", "deluxe" };
-            if (!validRoomTypes.Contains(bookingRequest.RoomType.ToLower()))
-                return (null, $"Invalid room type '{bookingRequest.RoomType}'. Valid types are: Single, Double, Deluxe.");
+            // Look up room type from database to validate and get capacity
+            var roomType = await _hotelService.GetRoomTypeByNameAsync(bookingRequest.RoomType);
 
-            // Get room type capacity and validate against guest count
-            var roomTypeCapacities = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+            if (roomType == null)
             {
-                { "single", 1 },
-                { "double", 2 },
-                { "deluxe", 2 }
-            };
+                var validTypes = await _hotelService.GetValidRoomTypeNamesAsync();
+                return (null, $"Invalid room type '{bookingRequest.RoomType}'. Valid types are: {string.Join(", ", validTypes)}.");
+            }
 
-            var capacity = roomTypeCapacities[bookingRequest.RoomType.ToLower()];
-            if (bookingRequest.GuestCount > capacity)
-                return (null, $"Room type '{bookingRequest.RoomType}' has a capacity of {capacity} and cannot accommodate {bookingRequest.GuestCount} guests.");
+            // Validate guest count against room type capacity
+            if (bookingRequest.GuestCount > roomType.Capacity)
+                return (null, $"A {roomType.Name} room has a capacity of {roomType.Capacity} and cannot accommodate {bookingRequest.GuestCount} guests.");
         }
 
         // Find available rooms that match the criteria (including room type if specified)
@@ -95,7 +92,7 @@ public class BookingService : IBookingService
             return (null, message);
         }
 
-        // Get the full room entity for the booking
+        // Get the full room data for the booking
         var room = await _context.Rooms
             .Include(r => r.RoomType)
             .Include(r => r.Hotel)
@@ -155,7 +152,7 @@ public class BookingService : IBookingService
     /// <summary>
     /// Generate unique booking reference
     /// </summary>
-    /// <returns>Booking reference</returns>
+    /// <returns>Booking reference as string</returns>
     private async Task<string> GenerateUniqueBookingReferenceAsync()
     {
         string reference;
