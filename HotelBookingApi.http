@@ -1,0 +1,58 @@
+@baseUrl = http://localhost:5000
+
+### Seed the database with test data
+POST {{baseUrl}}/api/admin/seed
+
+### Reset the database
+POST {{baseUrl}}/api/admin/reset
+
+### Search hotels by name
+GET {{baseUrl}}/api/hotels?name=Hotel
+Accept: application/json
+
+### Get hotel by ID
+GET {{baseUrl}}/api/hotels/1
+Accept: application/json
+
+### Get available rooms (any type)
+GET {{baseUrl}}/api/hotels/1/rooms/available?checkIn=2026-07-15&checkOut=2026-07-18&guestCount=2
+Accept: application/json
+
+### Get available rooms (specific room type)
+GET {{baseUrl}}/api/hotels/1/rooms/available?checkIn=2026-07-15&checkOut=2026-07-18&guestCount=2&roomType=Deluxe
+Accept: application/json
+
+### Create a booking (any available room)
+POST {{baseUrl}}/api/bookings
+Content-Type: application/json
+
+{
+  "hotelId": 1,
+  "firstName": "John",
+  "lastName": "Doe",
+  "address": "123 Main St, London, UK",
+  "contactNumber": "+44 7700 900000",
+  "guestCount": 2,
+  "checkInDate": "2026-07-15",
+  "checkOutDate": "2026-07-18"
+}
+
+### Create a booking (specific room type)
+POST {{baseUrl}}/api/bookings
+Content-Type: application/json
+
+{
+  "hotelId": 1,
+  "roomType": "Deluxe",
+  "firstName": "Jane",
+  "lastName": "Smith",
+  "address": "456 Oak Ave, Manchester, UK",
+  "contactNumber": "+44 7700 900001",
+  "guestCount": 2,
+  "checkInDate": "2026-07-20",
+  "checkOutDate": "2026-07-23"
+}
+
+### Get booking by reference (replace with actual reference)
+GET {{baseUrl}}/api/bookings/BK-20260701-ABC123
+Accept: application/json
