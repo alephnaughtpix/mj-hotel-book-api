@@ -15,7 +15,7 @@ RESTful API for hotel room bookings built on **ASP.NET Core** and **Entity Frame
 
 In this example, there are a number of hotels, each with 6 rooms. Two of them are single, two are double, and two are deluxe double rooms. The deluxe and double can accomodate up to 2 guests, and a single room accomodates only 1. No more guests can be allocated to the room. Guests stay in the same room throughout their stay. Rooms cannot be double booked.
 
-The example provides a simple API which could be imaged as the backend used by an application allowing users to search for hotels, check availability of rooms, and book rooms if they are available.
+The example provides a simple API which could be imagined as the backend used by an application allowing users to search for hotels, check availability of rooms, and book rooms if they are available.
 
 ## Technology
 
