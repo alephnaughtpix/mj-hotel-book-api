@@ -33,6 +33,11 @@ public class HotelService : IHotelService
             .ToListAsync();
     }
 
+    /// <summary>
+    /// Get hotel details by ID.
+    /// </summary>
+    /// <param name="id">ID of the hotel</param>
+    /// <returns>HotelDetailDataTransfer object containing hotel details, or null if not found</returns>
     public async Task<HotelDetailDataTransfer?> GetHotelByIdAsync(int id)
     {
         return await _context.Hotels

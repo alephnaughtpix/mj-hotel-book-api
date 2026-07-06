@@ -16,6 +16,11 @@ public class BookingService : IBookingService
         _hotelService = hotelService;
     }
 
+    /// <summary>
+    /// Get booking details by booking reference.
+    /// </summary>
+    /// <param name="bookingReference">String contaaining the booking reference</param>
+    /// <returns>BookingResponseDataTransfer object containing booking details, or null if not found</returns>
     public async Task<BookingResponseDataTransfer?> GetBookingByReferenceAsync(string bookingReference)
     {
         return await _context.Bookings
@@ -49,6 +54,11 @@ public class BookingService : IBookingService
             .FirstOrDefaultAsync();
     }
 
+    /// <summary>
+    /// Create a new booking, given the booking request data transfer object. 
+    /// </summary>
+    /// <param name="bookingRequest">Booking request data transfer object containing booking details</param>
+    /// <returns></returns>
     public async Task<(BookingResponseDataTransfer? Booking, string? Error)> CreateBookingAsync(CreateBookingDataTransfer bookingRequest)
     {
         // Validate dates
